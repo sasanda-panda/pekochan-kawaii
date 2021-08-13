@@ -1,0 +1,3 @@
+@function _vw($number) {
+  @return (1vw * $number / 768 * 100);
+}

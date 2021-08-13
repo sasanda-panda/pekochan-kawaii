@@ -1,0 +1,12 @@
+@import './reset';
+@import './function';
+@import './variable';
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap');
+
+body {
+  width: 100%;
+  background-color: #A8D2FB;
+  overflow-x: hidden;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-feature-settings: "palt" 1;
+}
