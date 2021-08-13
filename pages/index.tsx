@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import styles from '../styles/Home.module.scss'
 
+import loadingImage from '../public/image_loading.svg'
 import pekoraMainImage from '../public/text_main-pekora.png'
 import pekoraProfileImage from '../public/image_profile-pekora.webp'
 import yagooMainImage from '../public/text_main-yagoo.png'
@@ -133,11 +134,6 @@ const Home = () => {
     if (div) div.style.height = `${window.innerHeight}px`;
   }
 
-  // const videoPlay = () => {
-  //   const video = videoRef.current;
-  //   if (video) video.play();
-  // }
-
   const onScrollWindow = () => {
     if (window.pageYOffset + window.innerHeight !== document.body.clientHeight) return
     setIsLoading(true)
@@ -146,10 +142,11 @@ const Home = () => {
       setTimeout(() => {
         character === 'pekora' ? setCharacter('yagoo') : setCharacter('pekora')
         character === 'pekora' ? setIsSecret(false) : setIsSecret(true)
-        resetMainHeight();
-        setIsLoading(false)
-      }, 800)
-    }, 800)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 400)
+      }, 1000)
+    }, 1000)
   }
 
   useEffect(() => {
@@ -160,7 +157,7 @@ const Home = () => {
     setTimeout(() => {
       resetMainHeight();
       setIsLoading(false);
-    }, 3200);
+    }, 2400);
   }, []);
 
   return (
@@ -175,16 +172,18 @@ const Home = () => {
         <meta property="og:title" content="pekochan-kawaii.com" />
         <meta property="og:site_name" content="pekochan-kawaii.com" />
         <meta property="og:description" content="pekochan kawaii!" />
-        <meta property="og:image" content="/ogp.png" />
+        <meta property="og:image" content="https://www.pekochan-kawaii.com/ogp.png" />
         <meta property="og:locale" content="ja_JP" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="/ogp.png" />
+        <meta name="twitter:image" content="https://www.pekochan-kawaii.com/ogp.png" />
         <link rel="canonical" href="https://www.pekochan-kawaii.com/" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
         <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png"></link>
       </Head>
-      <div className={`${styles.loading} ${isLoading ? styles.loadingTrue : styles.loadingFalse}`}></div>
+      <div className={`${styles.loading} ${isLoading ? styles.loadingTrue : styles.loadingFalse}`}>
+        <figure className={styles.loading_image}><Image src={loadingImage} alt="loadingImage" /></figure>
+      </div>
       <main ref={mainRef} className={styles.main}>
         <h1 className={styles.main_text}><Image src={data[character].main.text} alt="mainImage" /></h1>
         <div className={styles.main_overlay}></div>
@@ -240,9 +239,9 @@ const Home = () => {
         <p className={styles.copyright_text}>&copy; 2016 COVER Corp.</p>
       </div>
       <div className={`${styles.secret} ${isSecret ? styles.secretTrue : styles.secretFalse}`}>
-        <figure className={styles.secret_image}>
+        <a href="https://twitter.com/share?url=https://www.pekochan-kawaii.com/&hashtags=兎田ぺこら,ぺこらーと" target="_blank" rel="noreferrer" className={styles.secret_image}>
           <Image src={secretImage} alt="secretImage" />
-        </figure>
+        </a>
       </div>
     </div>
   )

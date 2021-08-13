@@ -14,6 +14,16 @@
   &False {
     transform: translateY(-100%);
   }
+  &_image {
+    width: 48px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @media (max-width: 768px) {
+      width: _vw(72);
+    }
+  }
 }
 
 .main {
@@ -142,6 +152,7 @@
     z-index: 2;
     @media (max-width: 768px) {
       width: _vw(496);
+      top: _vw(-24);
       left: _vw(-208);
     }
   }
