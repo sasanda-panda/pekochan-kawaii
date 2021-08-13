@@ -3,5 +3,4 @@ const optimizedImages = require('next-optimized-images');
 
 module.exports = {
   reactStrictMode: true,
-  distDir: 'build',
 }
