@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, createRef } from 'react'
 import Head from 'next/head'
 import Image from 'next/image' 
 import { motion } from 'framer-motion'
@@ -11,6 +11,9 @@ import yagooProfileImage from '../public/image_profile-yagoo.png'
 import profileIconYoutube from '../public/icon_profile-youtube.png'
 import profileIconTwitter from '../public/icon_profile-twitter.png'
 import secretImage from '../public/image_secret.png'
+import headOgp from '../public/ogp.png'
+import headFavicon from '../public/favicon.ico'
+import headAppleTouchIcon from '../public/apple-touch-icon.png'
 
 const data = {
   pekora: {
@@ -123,6 +126,18 @@ const Home = () => {
   const [isSecret, setIsSecret] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
+  const mainRef = createRef<HTMLDivElement>()
+
+  const resetMainHeight = () => {
+    const div = mainRef.current;
+    if (div) div.style.height = `${window.innerHeight}px`;
+  }
+
+  // const videoPlay = () => {
+  //   const video = videoRef.current;
+  //   if (video) video.play();
+  // }
+
   const onScrollWindow = () => {
     if (window.pageYOffset + window.innerHeight !== document.body.clientHeight) return
     setIsLoading(true)
@@ -131,6 +146,7 @@ const Home = () => {
       setTimeout(() => {
         character === 'pekora' ? setCharacter('yagoo') : setCharacter('pekora')
         character === 'pekora' ? setIsSecret(false) : setIsSecret(true)
+        resetMainHeight();
         setIsLoading(false)
       }, 800)
     }, 800)
@@ -142,6 +158,7 @@ const Home = () => {
 
   useEffect(() => {
     setTimeout(() => {
+      resetMainHeight();
       setIsLoading(false);
     }, 3200);
   }, []);
@@ -149,29 +166,29 @@ const Home = () => {
   return (
     <div>
       <Head>
-        <title>{data[character].title}</title>
+        <title>pekochan-kawaii.com</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="keywords" content="" />
-        <meta name="description" content="pekochan kawaii!!" />
-        <meta property="og:url" content="pekochan-kawaii.com" />
+        <meta name="keywords" content="カバー,カバー株式会社,COVER,ホロライブ,ホロライブプロダクション,hololive,hololive production,ホロスターズ,holostars,HOLOSTARS,ぺこら,pekora,兎田ぺこら,Pekora Usada,ぺこちゃん,pekochan" />
+        <meta name="description" content="pekochan kawaii!" />
+        <meta property="og:url" content="https://www.pekochan-kawaii.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="pekochan-kawaii.com" />
         <meta property="og:site_name" content="pekochan-kawaii.com" />
-        <meta property="og:description" content="pekochan kawaii!!" />
-        <meta property="og:image" content="{{ ogp }}" />
+        <meta property="og:description" content="pekochan kawaii!" />
+        <meta property="og:image" content="/ogp.png" />
         <meta property="og:locale" content="ja_JP" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="{{ ogp }}" />
-        <link rel="canonical" href="pekochan-kawaii.com" />
-        <link rel="shortcut icon" href="{{ favicon }}" type="image/vnd.microsoft.icon" />
-        <link rel="icon" href="{{ favicon }}" type="image/vnd.microsoft.icon" />
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ apple-touch-icon }}"></link>
+        <meta name="twitter:image" content="/ogp.png" />
+        <link rel="canonical" href="https://www.pekochan-kawaii.com/" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+        <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png"></link>
       </Head>
       <div className={`${styles.loading} ${isLoading ? styles.loadingTrue : styles.loadingFalse}`}></div>
-      <main className={styles.main}>
+      <main ref={mainRef} className={styles.main}>
         <h1 className={styles.main_text}><Image src={data[character].main.text} alt="mainImage" /></h1>
         <div className={styles.main_overlay}></div>
-        <video className={styles.main_video} src={data[character].main.video} muted autoPlay loop></video>
+        <video className={styles.main_video} src={data[character].main.video} muted autoPlay loop playsInline></video>
       </main>
       <div className={styles.profile}>
         <div className={styles.profile_name}>
